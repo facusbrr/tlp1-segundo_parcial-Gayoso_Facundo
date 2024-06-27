@@ -39,11 +39,28 @@ app.post("/products", (req, res) => {
     };
     
     productos.push(producto);
-    res.json({ message: "Producto agregado con éxito", producto });
+    res.json({ message: "Producto agregado", producto });
   });
 //METODOS PUT
-
+app.put("/products/:id", (req, res) => {
+    const { name, quantity, price } = req.body;
+    const producto = productos.find(producto => producto.id === parseInt(req.params.id));
+    if (!producto) return res.status(404).send("Producto no encontrado");
+    
+    producto.name = name ?? producto.name;
+    producto.quantity = quantity ? parseInt(quantity) : producto.quantity;
+    producto.price = price ? parseInt(price) : producto.price;
+    
+    res.json({ message: "Usuario actualizado", producto });
+  });
 //METODOS DELETE
-
+app.delete("/products/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const productIndex = productos.findIndex(producto => producto.id === id);
+    if (productIndex === -1) return res.status(404).send("Producto no encontrado");
+  
+    const productoEliminado = productos.splice(productIndex, 1);
+    res.json({ message: "Producto eliminado", productoEliminado});
+  });
 //Poniendo en escucha el servidor
 app.listen(PORT, () => console.log(`Server funcionando en el puerto ${PORT}`))
