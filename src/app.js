@@ -35,7 +35,7 @@ app.post("/products", (req, res) => {
         id,
         name,
         quantity: parseInt(quantity), 
-        price: parseInt(price)
+        price: parseFloat(price)
     };
     
     productos.push(producto);
@@ -49,7 +49,7 @@ app.put("/products/:id", (req, res) => {
     
     producto.name = name ?? producto.name;
     producto.quantity = quantity ? parseInt(quantity) : producto.quantity;
-    producto.price = price ? parseInt(price) : producto.price;
+    producto.price = price ? parseFloat(price) : producto.price;
     
     res.json({ message: "Usuario actualizado", producto });
   });
