@@ -1,5 +1,5 @@
 const express = require('express');
-const productos = require('./src/database/db.js');
+const productos = require('./database/db.js');
 
 //Creando el server
 const app = express();
